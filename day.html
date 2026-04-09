@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title> -  📔</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(145deg, #fff0f5 0%, #ffe4e9 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding-bottom: 90px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #be185d, #ec4899);
+            padding: 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 20px rgba(190, 24, 93, 0.3);
+        }
+
+        .header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 26px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 12px;
+            color: #fce7f3;
+            margin-top: 6px;
+        }
+
+        .date-badge {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .content {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 20px 16px 30px;
+        }
+
+        /* أزرار الإضافة السريعة */
+        .quick-add {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            justify-content: center;
+        }
+
+        .quick-btn {
+            background: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #be185d;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-2px);
+            background: #ec4899;
+            color: white;
+        }
+
+        /* إحصائيات سريعة */
+        .mini-stats {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-radius: 28px;
+            padding: 14px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .mini-stat {
+            flex: 1;
+        }
+
+        .mini-stat-number {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ec4899;
+        }
+
+        .mini-stat-label {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        /* قائمة المهام */
+        .tasks-list {
+            margin-bottom: 24px;
+        }
+
+        .task-item {
+            background: white;
+            border-radius: 20px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-right: 4px solid;
+            transition: all 0.2s;
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+            background: #f8fafc;
+        }
+
+        .task-item.completed .task-title {
+            text-decoration: line-through;
+        }
+
+        .task-icon {
+            width: 44px;
+            height: 44px;
+            background: #fce7f3;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 800;
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        .task-desc {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 3px;
+        }
+
+        .task-time {
+            font-size: 10px;
+            color: #ec4899;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .task-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 6px;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+        }
+
+        .complete-btn {
+            color: #22c55e;
+        }
+        .complete-btn:hover { background: #dcfce7; }
+        .delete-btn {
+            color: #ef4444;
+        }
+        .delete-btn:hover { background: #fee2e2; }
+
+        /* المذكرات */
+        .diary-section {
+            background: white;
+            border-radius: 28px;
+            padding: 20px;
+            border: 1px solid #fbcfe8;
+            margin-top: 8px;
+        }
+
+        .diary-section h3 {
+            font-family: 'Amiri', serif;
+            color: #be185d;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diary-input {
+            width: 100%;
+            background: #fef9fc;
+            border: 1px solid #fbcfe8;
+            border-radius: 20px;
+            padding: 12px;
+            font-family: 'Amiri', serif;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .save-diary {
+            background: #ec4899;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* المودال */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+
+        .modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 40px;
+            padding: 24px;
+            width: 90%;
+            max-width: 380px;
+        }
+
+        .modal-content h3 {
+            color: #be185d;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #f9a8d4;
+            border-radius: 24px;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: #ec4899;
+            color: white;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: #f1f5f9;
+            color: #475569;
+            border: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #f472b6;
+        }
+
+        /* التابات */
+        .tabs-container {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            background: #0f172a;
+            border-radius: 50px;
+            padding: 5px 12px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 100;
+        }
+
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            color: #94a3b8;
+            font-size: 9px;
+            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 40px;
+        }
+
+        .tab i { font-size: 18px; }
+        .tab.active { color: #ffd700; background: rgba(220,38,38,0.2); }
+        .tab span { font-size: 10px; font-weight: 600; }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 85px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            background: #ec4899;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            opacity: 0;
+            transition: 0.2s;
+            z-index: 99;
+        }
+
+        .back-to-top.visible { opacity: 1; }
+
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #831843;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 12px;
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🌷  بحبك 🌷</h1>
+    <p><i class="fas fa-heart"></i> هنا  حياتك 
+ <i class="fas fa-heart"></i></p>
+    <div class="date-badge" id="currentDate"></div>
+</div>
+
+<div class="content">
+    <!-- أزرار إضافة سريعة -->
+    <div class="quick-add">
+        <button class="quick-btn" data-type="موعد"><i class="fas fa-calendar-check"></i> موعد</button>
+        <button class="quick-btn" data-type="علاج"><i class="fas fa-pills"></i> علاج</button>
+        <button class="quick-btn" data-type="مذاكرة"><i class="fas fa-graduation-cap"></i> مذاكرة</button>
+        <button class="quick-btn" data-type="تسلية"><i class="fas fa-film"></i> تسلية</button>
+        <button class="quick-btn" data-type="أخرى"><i class="fas fa-plus-circle"></i> أخرى</button>
+    </div>
+
+    <!-- إحصائيات سريعة -->
+    <div class="mini-stats">
+        <div class="mini-stat">
+            <div class="mini-stat-number" id="totalCount">0</div>
+            <div class="mini-stat-label">إجمالي</div>
+        </div>
+        <div class="mini-stat">
+            <div class="mini-stat-number" id="completedCount">0</div>
+            <div class="mini-stat-label">منجزة</div>
+        </div>
+        <div class="mini-stat">
+            <div class="mini-stat-number" id="pendingCount">0</div>
+            <div class="mini-stat-label">متبقية</div>
+        </div>
+    </div>
+
+    <!-- قائمة المهام -->
+    <div id="tasksList" class="tasks-list"></div>
+
+    <!-- مذكرات اليوم -->
+    <div class="diary-section">
+        <h3><i class="fas fa-pen-fancy"></i> مذكراتي اليومية</h3>
+        <textarea class="diary-input" id="diaryInput" placeholder="اكتبي مشاعرك، أفكارك، أو أي حاجة في قلبك اليوم..."></textarea>
+        <button class="save-diary" id="saveDiaryBtn"><i class="fas fa-save"></i> احفظي مذكراتي</button>
+    </div>
+</div>
+
+<!-- مودال الإضافة -->
+<div class="modal" id="taskModal">
+    <div class="modal-content">
+        <h3 id="modalTitle">➕ إضافة</h3>
+        <input type="text" id="taskTitle" placeholder="العنوان (مثال: دكتور أسنان)">
+        <input type="text" id="taskDesc" placeholder="تفاصيل (اختياري)">
+        <input type="time" id="taskTime" value="12:00">
+        <input type="hidden" id="taskType">
+        <div class="modal-buttons">
+            <button class="btn-save" id="saveTaskBtn">حفظ</button>
+            <button class="btn-cancel" id="cancelModalBtn">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
+
+<div class="tabs-container">
+    <div class="tab" id="tabHome"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+    <div class="tab active" id="tabDay"><i class="fas fa-calendar-alt"></i><span>تنظيم اليوم</span></div>
+    <div class="tab" id="tabStudy"><i class="fas fa-graduation-cap"></i><span>المذاكرة</span></div>
+    <div class="tab" id="tabFun"><i class="fas fa-film"></i><span>تسلية</span></div>
+</div>
+
+<script>
+    // البيانات
+    let tasks = [];
+    let currentType = 'موعد';
+
+    // تحميل البيانات من localStorage
+    function loadData() {
+        const savedTasks = localStorage.getItem('myDayTasks');
+        if(savedTasks) tasks = JSON.parse(savedTasks);
+        else tasks = [];
+
+        const savedDiary = localStorage.getItem('myDayDiary');
+        if(savedDiary) document.getElementById('diaryInput').value = savedDiary;
+
+        renderTasks();
+        updateStats();
+    }
+
+    function saveTasks() {
+        localStorage.setItem('myDayTasks', JSON.stringify(tasks));
+        renderTasks();
+        updateStats();
+    }
+
+    function saveDiary() {
+        const diary = document.getElementById('diaryInput').value;
+        localStorage.setItem('myDayDiary', diary);
+        showToast('🤍 تم حفظ مذكراتك');
+    }
+
+    function updateStats() {
+        const total = tasks.length;
+        const completed = tasks.filter(t => t.completed).length;
+        document.getElementById('totalCount').innerText = total;
+        document.getElementById('completedCount').innerText = completed;
+        document.getElementById('pendingCount').innerText = total - completed;
+    }
+
+    // عرض التاريخ
+    function showDate() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').innerHTML = now.toLocaleDateString('ar-EG', options);
+    }
+
+    // إضافة مهمة
+    function addTask(type, title, desc, time) {
+        if(!title.trim()) {
+            showToast('اكتبي عنوان للمهمة يا حبيبتي');
+            return false;
+        }
+        const newTask = {
+            id: Date.now(),
+            type: type,
+            title: title,
+            desc: desc,
+            time: time,
+            completed: false,
+            date: new Date().toDateString()
+        };
+        tasks.unshift(newTask);
+        saveTasks();
+        showToast(`✨ تمت إضافة ${type} بنجاح ✨`);
+        return true;
+    }
+
+    function toggleComplete(id) {
+        const task = tasks.find(t => t.id == id);
+        if(task) {
+            task.completed = !task.completed;
+            saveTasks();
+            if(task.completed) showToast('🎉 مبروك! أنجزتي مهمة 🎉');
+            else showToast('🔄 تم التراجع');
+        }
+    }
+
+    function deleteTask(id) {
+        tasks = tasks.filter(t => t.id != id);
+        saveTasks();
+        showToast('🗑️ تم الحذف');
+    }
+
+    // عرض المهام
+    function renderTasks() {
+        const container = document.getElementById('tasksList');
+        if(tasks.length === 0) {
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-calendar-day"></i><p>مفيش مهام النهاردة، اضغطي على الأزرار الوردية عشان تضيفي ♥</p></div>`;
+            return;
+        }
+
+        container.innerHTML = tasks.map(task => {
+            let icon = '';
+            let borderColor = '';
+            switch(task.type) {
+                case 'موعد': icon = 'fas fa-calendar-check'; borderColor = '#ec4899'; break;
+                case 'علاج': icon = 'fas fa-pills'; borderColor = '#22c55e'; break;
+                case 'مذاكرة': icon = 'fas fa-graduation-cap'; borderColor = '#f97316'; break;
+                case 'تسلية': icon = 'fas fa-film'; borderColor = '#8b5cf6'; break;
+                default: icon = 'fas fa-star'; borderColor = '#f472b6';
+            }
+            return `
+                <div class="task-item ${task.completed ? 'completed' : ''}" style="border-right-color: ${borderColor}">
+                    <div class="task-icon"><i class="${icon}"></i></div>
+                    <div class="task-info">
+                        <div class="task-title">${escapeHtml(task.title)}</div>
+                        ${task.desc ? `<div class="task-desc">${escapeHtml(task.desc)}</div>` : ''}
+                        <div class="task-time"><i class="fas fa-clock"></i> ${task.time}</div>
+                    </div>
+                    <div class="task-actions">
+                        <button class="complete-btn" onclick="toggleComplete(${task.id})"><i class="fas ${task.completed ? 'fa-undo' : 'fa-check-circle'}"></i></button>
+                        <button class="delete-btn" onclick="deleteTask(${task.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); }
+
+    function showToast(msg) {
+        let toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<i class="fas fa-heart"></i> ${msg}`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+    }
+
+    // المودال
+    const modal = document.getElementById('taskModal');
+    document.querySelectorAll('.quick-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentType = btn.getAttribute('data-type');
+            document.getElementById('modalTitle').innerHTML = `➕ إضافة ${currentType}`;
+            document.getElementById('taskTitle').value = '';
+            document.getElementById('taskDesc').value = '';
+            document.getElementById('taskTime').value = new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'});
+            document.getElementById('taskType').value = currentType;
+            modal.classList.add('show');
+        });
+    });
+
+    document.getElementById('saveTaskBtn').addEventListener('click', () => {
+        const title = document.getElementById('taskTitle').value;
+        const desc = document.getElementById('taskDesc').value;
+        const time = document.getElementById('taskTime').value;
+        const type = document.getElementById('taskType').value;
+        addTask(type, title, desc, time);
+        modal.classList.remove('show');
+    });
+
+    document.getElementById('cancelModalBtn').addEventListener('click', () => modal.classList.remove('show'));
+    document.getElementById('saveDiaryBtn').addEventListener('click', saveDiary);
+
+    // التابات
+    const tabHome = document.getElementById('tabHome');
+    const tabDay = document.getElementById('tabDay');
+    const tabStudy = document.getElementById('tabStudy');
+    const tabFun = document.getElementById('tabFun');
+    function setActiveTab(active) {
+        [tabHome, tabDay, tabStudy, tabFun].forEach(t => t.classList.remove('active'));
+        active.classList.add('active');
+    }
+    tabHome.addEventListener('click', () => { setActiveTab(tabHome); window.location.href = 'index.html'; });
+    tabDay.addEventListener('click', () => { setActiveTab(tabDay); window.scrollTo({top:0}); });
+    tabStudy.addEventListener('click', () => { setActiveTab(tabStudy); window.location.href = 'study.html'; });
+    tabFun.addEventListener('click', () => { setActiveTab(tabFun); window.location.href = 'fun.html'; });
+
+    // زر العودة
+    const backBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => backBtn.classList.toggle('visible', window.scrollY > 300));
+    backBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    // بدء التشغيل
+    showDate();
+    loadData();
+</script>
+</body>
+</html>

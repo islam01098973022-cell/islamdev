@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>رسايل لحبيبتي 🤍</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(145deg, #fff0f5 0%, #ffe4e9 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            direction: rtl;
+            padding-bottom: 80px;
+        }
+
+        /* شاشة الدخول (intro) */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fdf2f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .intro-screen img {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+            border-radius: 48px;
+            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.2);
+        }
+
+        .intro-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            display: none;
+            max-width: 680px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px 16px 30px;
+        }
+
+        .main-content.show {
+            display: block;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* الهيدر */
+        .header {
+            text-align: center;
+            padding: 20px 0 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f9a8d4;
+        }
+
+        .header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 28px;
+            color: #be185d;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #f472b6;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .heart-icon {
+            color: #ec4899;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* الأزرار الوردية (مستطيلات) */
+        .audio-card {
+            background: linear-gradient(135deg, #fbcfe8 0%, #f9a8d4 100%);
+            border-radius: 28px;
+            padding: 16px 20px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .audio-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(236, 72, 153, 0.3);
+            background: linear-gradient(135deg, #f9a8d4 0%, #f472b6 100%);
+        }
+
+        .audio-card .text {
+            font-family: 'Amiri', serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: #831843;
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .audio-card .icon {
+            background: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ec4899;
+            font-size: 20px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .audio-card.playing .icon {
+            background: #ec4899;
+            color: white;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* زر الواتساب */
+        .whatsapp-card {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 1px solid #86efac;
+        }
+
+        .whatsapp-card .icon {
+            background: #25D366;
+            color: white;
+        }
+
+        .whatsapp-card .text {
+            color: #166534;
+        }
+
+        /* الرسالة الأخيرة */
+        .footer-message {
+            background: rgba(255,255,255,0.7);
+            border-radius: 32px;
+            padding: 20px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #fbcfe8;
+            backdrop-filter: blur(4px);
+        }
+
+        .footer-message p {
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+            color: #be185d;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+
+        .footer-message i {
+            color: #ec4899;
+            margin: 0 5px;
+        }
+
+        .small-note {
+            font-size: 12px;
+            color: #f472b6;
+            text-align: center;
+            margin-top: 16px;
+            font-weight: 500;
+        }
+
+        /* مؤقت التشغيل */
+        .now-playing {
+            position: fixed;
+            bottom: 90px;
+            left: 16px;
+            right: 16px;
+            background: #831843;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 60px;
+            font-size: 12px;
+            text-align: center;
+            transform: translateY(100px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(131, 24, 67, 0.95);
+            font-weight: 500;
+        }
+
+        .now-playing.show {
+            transform: translateY(0);
+        }
+
+        /* ========== التابات زي home.html بالضبط ========== */
+        .tabs-container {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            background: #0f172a;
+            border-radius: 50px;
+            padding: 5px 12px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            border: 1px solid #334155;
+            z-index: 100;
+        }
+
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            color: #94a3b8;
+            font-size: 9px;
+            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+
+        .tab i {
+            font-size: 18px;
+        }
+
+        .tab.active {
+            color: #ffd700;
+            background: rgba(220, 38, 38, 0.2);
+        }
+
+        .tab span {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* تحسين التمرير */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #ffe4e9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #f472b6;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة الترحيب (intro) -->
+    <div class="intro-screen" id="introScreen">
+        <img src="intro.PNG" alt="مرحباً حبيبتي" onerror="this.src='https://placehold.co/400x600/ffe4e9/ec4899?text=احبك+♥'">
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>يا وردتي 🤍 <i class="fas fa-heart heart-icon"></i></h1>
+            <p>معاكي في كل خطوة .. مش هسيبك أبداً</p>
+        </div>
+
+        <!-- التسجيل 1 -->
+        <div class="audio-card" data-audio="A.m4a">
+            <div class="text"><i class="fas fa-sun"></i> أول ما تصحي الصبح كل يوم اسمعي ده</div>
+            <div class="icon"><i class="fas fa-play"></i></div>
+        </div>
+
+        <!-- التسجيل 2 -->
+        <div class="audio-card" data-audio="B.m4a">
+            <div class="text"><i class="fas fa-cloud-moon"></i> لو صحيتي وحسيتي نفسك مخنوقة</div>
+            <div class="icon"><i class="fas fa-play"></i></div>
+        </div>
+
+        <!-- التسجيل 3 -->
+        <div class="audio-card" data-audio="C.m4a">
+            <div class="text"><i class="fas fa-heartbeat"></i> لما تحسي نفسك تعبتي</div>
+            <div class="icon"><i class="fas fa-play"></i></div>
+        </div>
+
+        <!-- التسجيل 4 -->
+        <div class="audio-card" data-audio="D.m4a">
+            <div class="text"><i class="fas fa-book-open"></i> لو هتبدأي تذاكري دوسي هنا قبلها</div>
+            <div class="icon"><i class="fas fa-play"></i></div>
+        </div>
+
+        <!-- التسجيل 5 -->
+        <div class="audio-card" data-audio="E.m4a">
+            <div class="text"><i class="fas fa-laptop"></i> لو حسيتي نفسك تعبتي من المذاكرة</div>
+            <div class="icon"><i class="fas fa-play"></i></div>
+        </div>
+
+        <!-- التسجيل 6 -->
+        <div class="audio-card" data-audio="F.m4a">
+            <div class="text"><i class="fas fa-meteor"></i> لو حسيتي إن كل حاجة تراكمت عليكي والدنيا كلها ضدك</div>
+            <div class="icon"><i class="fas fa-play"></i></div>
+        </div>
+
+        <!-- زر واتساب -->
+        <div class="audio-card whatsapp-card" id="whatsappBtn">
+            <div class="text"><i class="fab fa-whatsapp"></i> لو حسيتي إنك قلقانة من أي حاجة .. دوسي هنا و اتكلمي ♥</div>
+            <div class="icon"><i class="fab fa-whatsapp"></i></div>
+        </div>
+
+        <!-- التسجيل 7 (يائسة) -->
+        <div class="audio-card" data-audio="J.m4a">
+            <div class="text"><i class="fas fa-star-of-life"></i> لو حسيتي إنك يائسة .. أنا هنا دايماً</div>
+            <div class="icon"><i class="fas fa-play"></i></div>
+        </div>
+
+        <!-- الرسالة الأخيرة -->
+        <div class="footer-message">
+            <p>
+                <i class="fas fa-heart"></i> كل يوم هضيف تسجيلات جديدة، حبيت أخلص عمايل فيه بشكل سريع شوية، خد مني وقت. 
+                بس عايز أقولك إن فعلاً معاكي في أي وقت في كل الحالات <i class="fas fa-heart"></i>
+            </p>
+        </div>
+
+        <div class="small-note">
+            <i class="fas fa-headphones"></i> اضغط على أي مستطيل عشان تسمعي الصوت
+        </div>
+    </div>
+
+    <div class="now-playing" id="nowPlaying">
+        <i class="fas fa-music"></i> بتشغل دلوقتي...
+    </div>
+
+    <!-- التابات زي home.html بالضبط -->
+    <div class="tabs-container">
+        <div class="tab active" id="tabHome"><i class="fas fa-home"></i><span>الاساسية</span></div>
+        <div class="tab" id="tabDay"><i class="fas fa-calendar-alt"></i><span>تنظيم اليوم</span></div>
+        <div class="tab" id="tabStudy"><i class="fas fa-graduation-cap"></i><span>المذاكرة</span></div>
+        <div class="tab" id="TabFun"><i class="fas fa-film"></i><span>تسلية</span></div>
+    </div>
+
+    <script>
+        (function() {
+            // عناصر الصفحة
+            const introScreen = document.getElementById('introScreen');
+            const mainContent = document.getElementById('mainContent');
+            const nowPlayingDiv = document.getElementById('nowPlaying');
+            
+            let currentAudio = null;
+            let currentCard = null;
+
+            // عرض intro لمدة ثانيتين ثم الانتقال للمحتوى الرئيسي
+            setTimeout(() => {
+                introScreen.classList.add('hide');
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                    mainContent.classList.add('show');
+                }, 500);
+            }, 2000);
+
+            // وظيفة إيقاف الصوت الحالي
+            function stopCurrentAudio() {
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                    if (currentCard) {
+                        const iconDiv = currentCard.querySelector('.icon');
+                        if (iconDiv) {
+                            iconDiv.innerHTML = '<i class="fas fa-play"></i>';
+                            currentCard.classList.remove('playing');
+                        }
+                    }
+                    currentAudio = null;
+                    currentCard = null;
+                }
+                nowPlayingDiv.classList.remove('show');
+            }
+
+            // وظيفة تشغيل صوت جديد
+            function playAudio(audioSrc, cardElement) {
+                stopCurrentAudio();
+                
+                const audio = new Audio(audioSrc);
+                currentAudio = audio;
+                currentCard = cardElement;
+                
+                const iconDiv = cardElement.querySelector('.icon');
+                iconDiv.innerHTML = '<i class="fas fa-pause"></i>';
+                cardElement.classList.add('playing');
+                
+                const textCard = cardElement.querySelector('.text').innerText;
+                nowPlayingDiv.innerHTML = `<i class="fas fa-headphones"></i> بتسمعي دلوقتي: ${textCard.substring(0, 40)}...`;
+                nowPlayingDiv.classList.add('show');
+                
+                audio.play().catch(err => {
+                    console.error("خطأ في التشغيل:", err);
+                    nowPlayingDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> عذراً، الملف مش موجود: ${audioSrc}`;
+                    setTimeout(() => nowPlayingDiv.classList.remove('show'), 2000);
+                    stopCurrentAudio();
+                });
+                
+                audio.addEventListener('ended', () => {
+                    stopCurrentAudio();
+                });
+                
+                audio.addEventListener('error', () => {
+                    nowPlayingDiv.innerHTML = `<i class="fas fa-file-audio"></i> الملف ${audioSrc} مش موجود حالياً`;
+                    setTimeout(() => nowPlayingDiv.classList.remove('show'), 2000);
+                    stopCurrentAudio();
+                });
+            }
+
+            // الأزرار الصوتية
+            const audioCards = document.querySelectorAll('.audio-card:not(.whatsapp-card)');
+            audioCards.forEach(card => {
+                const audioFile = card.getAttribute('data-audio');
+                if (!audioFile) return;
+                
+                card.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (currentCard === card && currentAudio && !currentAudio.paused) {
+                        stopCurrentAudio();
+                    } else {
+                        playAudio(audioFile, card);
+                    }
+                });
+            });
+            
+            // زر الواتساب
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            whatsappBtn.addEventListener('click', () => {
+                stopCurrentAudio();
+                window.open('https://wa.me/201122104596', '_blank');
+            });
+            
+            // ========== التابات ==========
+            const tabHome = document.getElementById('tabHome');
+            const tabDay = document.getElementById('tabDay');
+            const tabStudy = document.getElementById('tabStudy');
+            const tabFun = document.getElementById('TabFun');
+            
+            function setActiveTab(activeTab) {
+                [tabHome, tabDay, tabStudy, tabFun].forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                activeTab.classList.add('active');
+            }
+            
+            tabHome.addEventListener('click', () => {
+                setActiveTab(tabHome);
+                // إعادة تحميل الصفحة أو إظهار المحتوى (هو موجود بالفعل)
+                // لو حابين نضيف smooth scroll
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            tabDay.addEventListener('click', () => {
+                setActiveTab(tabDay);
+                window.location.href = 'day.html';
+            });
+            
+            tabStudy.addEventListener('click', () => {
+                setActiveTab(tabStudy);
+                window.location.href = 'study.html';
+            });
+            
+            tabFun.addEventListener('click', () => {
+                setActiveTab(tabFun);
+                window.location.href = 'fun.html';
+            });
+            
+            // إيقاف الصوت عند مغادرة الصفحة
+            window.addEventListener('beforeunload', () => {
+                if (currentAudio) {
+                    currentAudio.pause();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

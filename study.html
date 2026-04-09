@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>المذاكرة - حبيبتي 📚</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(145deg, #fff0f5 0%, #ffe4e9 100%);
+            min-height: 100vh;
+            direction: rtl;
+            padding-bottom: 90px;
+        }
+
+        /* الهيدر */
+        .header {
+            background: linear-gradient(135deg, #be185d, #ec4899);
+            padding: 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 20px rgba(190, 24, 93, 0.3);
+        }
+
+        .header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 28px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 13px;
+            color: #fce7f3;
+            margin-top: 8px;
+        }
+
+        .heart-beat {
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* المحتوى */
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 24px 16px 30px;
+        }
+
+        /* بطاقة الاختيارات */
+        .selection-card {
+            background: white;
+            border-radius: 32px;
+            padding: 24px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(236, 72, 153, 0.15);
+            border: 1px solid #fbcfe8;
+        }
+
+        .selection-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #be185d;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .selection-title i {
+            font-size: 22px;
+        }
+
+        /* أزرار الاختيار (مواد / أوقات) */
+        .options-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .option-btn {
+            background: #fce7f3;
+            border: 2px solid #f9a8d4;
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #831843;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .option-btn:hover {
+            background: #f9a8d4;
+            color: white;
+            transform: scale(0.98);
+        }
+
+        .option-btn.selected {
+            background: #ec4899;
+            border-color: #ec4899;
+            color: white;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+        }
+
+        /* الخطة المعروضة */
+        .plan-card {
+            background: linear-gradient(135deg, #fbcfe8, #f9a8d4);
+            border-radius: 28px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .plan-card h3 {
+            font-family: 'Amiri', serif;
+            font-size: 20px;
+            color: #831843;
+            margin-bottom: 12px;
+        }
+
+        .plan-details {
+            font-size: 16px;
+            color: #be185d;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        /* المؤقت */
+        .timer-card {
+            background: white;
+            border-radius: 32px;
+            padding: 24px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 8px 24px rgba(236, 72, 153, 0.15);
+            border: 2px solid #f9a8d4;
+        }
+
+        .timer-display {
+            font-size: 64px;
+            font-weight: 800;
+            font-family: monospace;
+            color: #be185d;
+            background: #fce7f3;
+            padding: 20px;
+            border-radius: 60px;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+
+        .timer-label {
+            font-size: 14px;
+            color: #f472b6;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .study-status {
+            font-family: 'Amiri', serif;
+            font-size: 18px;
+            color: #831843;
+            margin: 12px 0;
+            font-weight: 700;
+        }
+
+        /* أزرار التحكم */
+        .control-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .btn-start {
+            background: #ec4899;
+            color: white;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+        }
+
+        .btn-start:hover {
+            background: #be185d;
+            transform: scale(0.98);
+        }
+
+        .btn-stop {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-stop:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-reset {
+            background: #fce7f3;
+            color: #ec4899;
+            border: 1px solid #f9a8d4;
+        }
+
+        /* رسالة تشجيعية */
+        .encouragement {
+            background: rgba(255,255,255,0.7);
+            border-radius: 28px;
+            padding: 16px;
+            text-align: center;
+            margin-top: 20px;
+            font-family: 'Amiri', serif;
+            font-size: 15px;
+            color: #be185d;
+            border: 1px solid #fbcfe8;
+        }
+
+        /* التابات */
+        .tabs-container {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            background: #0f172a;
+            border-radius: 50px;
+            padding: 5px 12px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            border: 1px solid #334155;
+            z-index: 100;
+        }
+
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            color: #94a3b8;
+            font-size: 9px;
+            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+
+        .tab i {
+            font-size: 18px;
+        }
+
+        .tab.active {
+            color: #ffd700;
+            background: rgba(220, 38, 38, 0.2);
+        }
+
+        .tab span {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* العودة للأعلى */
+        .back-to-top {
+            position: fixed;
+            bottom: 85px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            background: #ec4899;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.2s;
+            z-index: 99;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>📚 وقت المذاكرة يا حبيبتي <i class="fas fa-heart heart-beat"></i></h1>
+        <p><i class="fas fa-star"></i> فضي دماغك وابدأي.. أنا معاكي <i class="fas fa-star"></i></p>
+    </div>
+
+    <div class="content">
+        <!-- اختيار المادة -->
+        <div class="selection-card">
+            <div class="selection-title">
+                <i class="fas fa-flask"></i>
+                <span>اختاري المادة اللي هتذاكريها يا حبيبتي</span>
+            </div>
+            <div class="options-group" id="subjectGroup">
+                <button class="option-btn" data-subject="الفيزياء">⚛️ الفيزياء</button>
+                <button class="option-btn" data-subject="الكيمياء">🧪 الكيمياء</button>
+                <button class="option-btn" data-subject="الأحياء">🧬 الأحياء</button>
+            </div>
+        </div>
+
+        <!-- اختيار الوقت -->
+        <div class="selection-card">
+            <div class="selection-title">
+                <i class="fas fa-hourglass-half"></i>
+                <span>قد إيه هتذاكري؟</span>
+            </div>
+            <div class="options-group" id="timeGroup">
+                <button class="option-btn" data-minutes="30">نصف ساعة (30 دقيقة)</button>
+                <button class="option-btn" data-minutes="60">ساعة (60 دقيقة)</button>
+                <button class="option-btn" data-minutes="120">ساعتين (120 دقيقة)</button>
+                <button class="option-btn" data-minutes="180">3 ساعات (180 دقيقة)</button>
+                <button class="option-btn" data-minutes="240">4 ساعات (240 دقيقة)</button>
+            </div>
+        </div>
+
+        <!-- الخطة المعروضة -->
+        <div class="plan-card" id="planCard">
+            <h3><i class="fas fa-clipboard-list"></i> خطتك الجميلة</h3>
+            <div class="plan-details" id="planDetails">
+                ✨ اختاري المادة والوقت هون شوفي الخطة ✨
+            </div>
+        </div>
+
+        <!-- المؤقت -->
+        <div class="timer-card" id="timerCard">
+            <div class="timer-display" id="timerDisplay">00:00</div>
+            <div class="timer-label" id="timerLabel">جهزتي؟ اضغطي ابدأ</div>
+            <div class="study-status" id="studyStatus">
+                <i class="fas fa-heart"></i> مستعدة؟ اختاري وابدأي <i class="fas fa-heart"></i>
+            </div>
+            <div class="control-buttons">
+                <button class="btn btn-start" id="startBtn"><i class="fas fa-play"></i> ابدأي المذاكرة</button>
+                <button class="btn btn-stop" id="stopBtn"><i class="fas fa-stop"></i> وقفي</button>
+                <button class="btn btn-reset" id="resetBtn"><i class="fas fa-undo"></i> إعادة ضبط</button>
+            </div>
+        </div>
+
+        <div class="encouragement" id="encouragementMsg">
+            <i class="fas fa-music"></i>         </div>
+    </div>
+
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <div class="tabs-container">
+        <div class="tab" id="tabHome"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+        <div class="tab" id="tabDay"><i class="fas fa-calendar-alt"></i><span>تنظيم اليوم</span></div>
+        <div class="tab active" id="tabStudy"><i class="fas fa-graduation-cap"></i><span>المذاكرة</span></div>
+        <div class="tab" id="tabFun"><i class="fas fa-film"></i><span>تسلية</span></div>
+    </div>
+
+    <script>
+        // متغيرات الحالة
+        let selectedSubject = null;
+        let selectedMinutes = null;
+        let totalSeconds = 0;
+        let remainingSeconds = 0;
+        let timerInterval = null;
+        let isRunning = false;
+        let isStudyPhase = true;
+        let currentPhaseSeconds = 0;
+        
+        // عناصر DOM
+        const subjectBtns = document.querySelectorAll('#subjectGroup .option-btn');
+        const timeBtns = document.querySelectorAll('#timeGroup .option-btn');
+        const planDetails = document.getElementById('planDetails');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerLabel = document.getElementById('timerLabel');
+        const studyStatus = document.getElementById('studyStatus');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const encouragementMsg = document.getElementById('encouragementMsg');
+        
+        // الموسيقى
+        let studyMusic = null;
+        
+        // تحديث الخطة المعروضة
+        function updatePlan() {
+            if (!selectedSubject || !selectedMinutes) {
+                planDetails.innerHTML = '✨ اختاري المادة والوقت هون شوفي الخطة ✨';
+                return;
+            }
+            
+            const totalMin = selectedMinutes;
+            let planText = '';
+            
+            if (totalMin === 30) {
+                planText = `📖 ${selectedSubject}: 20 دقيقة مذاكرة + 10 دقايق بريك`;
+                currentPhaseSeconds = 20 * 60;
+            } else if (totalMin === 60) {
+                planText = `📖 ${selectedSubject}: 25 دقيقة مذاكرة + 10 دقايق بريك + 25 دقيقة مذاكرة`;
+                currentPhaseSeconds = 25 * 60;
+            } else if (totalMin === 120) {
+                planText = `📖 ${selectedSubject}: 45 دقيقة مذاكرة + 15 دقيقة بريك + 45 دقيقة مذاكرة + 15 دقيقة بريك`;
+                currentPhaseSeconds = 45 * 60;
+            } else if (totalMin === 180) {
+                planText = `📖 ${selectedSubject}: ساعة مذاكرة + 15 دقيقة بريك + ساعة مذاكرة + 15 دقيقة بريك + نصف ساعة مذاكرة`;
+                currentPhaseSeconds = 60 * 60;
+            } else if (totalMin === 240) {
+                planText = `📖 ${selectedSubject}: ساعة ونص مذاكرة + 20 دقيقة بريك + ساعة ونص مذاكرة + 20 دقيقة بريك`;
+                currentPhaseSeconds = 90 * 60;
+            }
+            
+            planDetails.innerHTML = planText;
+            
+            // إعادة ضبط الوقت حسب الخطة (أول فترة مذاكرة)
+            if (!isRunning) {
+                remainingSeconds = currentPhaseSeconds;
+                updateTimerDisplay();
+            }
+        }
+        
+        // تحديث شاشة المؤقت
+        function updateTimerDisplay() {
+            const mins = Math.floor(remainingSeconds / 60);
+            const secs = remainingSeconds % 60;
+            timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // تشغيل الموسيقى
+        function startMusic() {
+            if (studyMusic) {
+                studyMusic.pause();
+                studyMusic = null;
+            }
+            studyMusic = new Audio('study.m4a');
+            studyMusic.loop = true;
+            studyMusic.play().catch(err => {
+                console.warn("الموسيقى مش موجودة أو اتحظرت:", err);
+                encouragementMsg.innerHTML = '<i class="fas fa-music"></i> الموسيقى هتشتغل لو الملف موجود، استمتعي 🎵';
+            });
+        }
+        
+        // إيقاف الموسيقى
+        function stopMusic() {
+            if (studyMusic) {
+                studyMusic.pause();
+                studyMusic = null;
+            }
+        }
+        
+        // إنهاء الجلسة الحالية والانتقال للبريك أو النهاية
+        function endCurrentPhase() {
+            if (!selectedMinutes) return;
+            
+            const totalMin = selectedMinutes;
+            let isComplete = false;
+            
+            // منطق بسيط للانتقال بين المذاكرة والبريك
+            // هنستخدم isStudyPhase لتحديد المرحلة الحالية
+            
+            if (isStudyPhase) {
+                // انتهت المذاكرة، نروح لبريك
+                isStudyPhase = false;
+                studyStatus.innerHTML = '<i class="fas fa-coffee"></i> وقت بريك! ارتاحي شوية <i class="fas fa-heart"></i>';
+                timerLabel.textContent = 'بريك';
+                
+                // تحديد مدة البريك حسب الوقت الكلي
+                if (totalMin <= 60) {
+                    remainingSeconds = 10 * 60; // 10 دقايق بريك
+                } else if (totalMin <= 120) {
+                    remainingSeconds = 15 * 60;
+                } else {
+                    remainingSeconds = 20 * 60;
+                }
+                updateTimerDisplay();
+                // فضفضي دماغك (الموسيقى تفضل شغالة)
+            } else {
+                // انتهى البريك، نرجع لمذاكرة تاني لو فيه وقت متبقي
+                isStudyPhase = true;
+                studyStatus.innerHTML = `<i class="fas fa-book-open"></i> ارجعي اذاكري ${selectedSubject} يا وردتي <i class="fas fa-star"></i>`;
+                timerLabel.textContent = 'مذاكرة';
+                
+                // نحدد مدة المذاكرة الجديدة
+                if (totalMin === 60) {
+                    remainingSeconds = 25 * 60;
+                } else if (totalMin === 120) {
+                    remainingSeconds = 45 * 60;
+                } else if (totalMin === 180) {
+                    // بعد أول بريك، تاني مذاكرة ساعة
+                    remainingSeconds = 60 * 60;
+                } else if (totalMin === 240) {
+                    remainingSeconds = 90 * 60;
+                } else {
+                    isComplete = true;
+                }
+                
+                if (!isComplete && remainingSeconds > 0) {
+                    updateTimerDisplay();
+                } else {
+                    isComplete = true;
+                }
+            }
+            
+            if (isComplete) {
+                // خلصت الخطة كلها
+                stopTimer();
+                studyStatus.innerHTML = '<i class="fas fa-trophy"></i> مبروك! خلصتي المذاكرة النهاردة.. فخورة بيكي <i class="fas fa-crown"></i>';
+                timerLabel.textContent = 'انتهيتي!';
+                stopMusic();
+                encouragementMsg.innerHTML = '<i class="fas fa-heart"></i> أديتِ أحلى مذاكرة، استريحي دلوقتي <i class="fas fa-heart"></i>';
+            }
+        }
+        
+        // تشغيل المؤقت
+        function startTimer() {
+            if (!selectedSubject || !selectedMinutes) {
+                studyStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> اختاري المادة والوقت الأول يا حبيبتي';
+                return;
+            }
+            
+            if (isRunning) return;
+            
+            if (remainingSeconds <= 0) {
+                // إعادة تهيئة المؤقت حسب الخطة
+                resetTimerToPlan();
+            }
+            
+            isRunning = true;
+            startMusic();
+            
+            timerInterval = setInterval(() => {
+                if (remainingSeconds > 0) {
+                    remainingSeconds--;
+                    updateTimerDisplay();
+                }
+                
+                if (remainingSeconds === 0) {
+                    // انتهت المرحلة الحالية
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    isRunning = false;
+                    
+                    // تشغيل صوت تنبيه بسيط (اختياري)
+                    try {
+                        const beep = new Audio('data:audio/wav;base64,U3RlYWx0aCBiZWVw...');
+                        beep.play().catch(()=>{});
+                    } catch(e) {}
+                    
+                    endCurrentPhase();
+                    
+                    // لو لسه فيه وقت متبقي نبدأ تاني تلقائي
+                    if (remainingSeconds > 0 && !isRunning) {
+                        startTimer();
+                    }
+                }
+            }, 1000);
+        }
+        
+        // إعادة ضبط المؤقت حسب الخطة الحالية
+        function resetTimerToPlan() {
+            if (!selectedMinutes) return;
+            
+            isStudyPhase = true;
+            studyStatus.innerHTML = `<i class="fas fa-book-open"></i> بذاكر ${selectedSubject} يا قمر <i class="fas fa-star"></i>`;
+            timerLabel.textContent = 'مذاكرة';
+            
+            const totalMin = selectedMinutes;
+            if (totalMin === 30) {
+                remainingSeconds = 20 * 60;
+            } else if (totalMin === 60) {
+                remainingSeconds = 25 * 60;
+            } else if (totalMin === 120) {
+                remainingSeconds = 45 * 60;
+            } else if (totalMin === 180) {
+                remainingSeconds = 60 * 60;
+            } else if (totalMin === 240) {
+                remainingSeconds = 90 * 60;
+            }
+            updateTimerDisplay();
+        }
+        
+        // إيقاف المؤقت
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            isRunning = false;
+            stopMusic();
+            studyStatus.innerHTML = '<i class="fas fa-pause-circle"></i> وقفتي.. كملي بقى يا بطلة';
+        }
+        
+        // إعادة ضبط كامل
+        function resetAll() {
+            stopTimer();
+            isStudyPhase = true;
+            if (selectedMinutes) {
+                resetTimerToPlan();
+            } else {
+                remainingSeconds = 0;
+                timerDisplay.textContent = '00:00';
+            }
+            timerLabel.textContent = 'جهزتي؟ اضغطي ابدأ';
+            studyStatus.innerHTML = '<i class="fas fa-heart"></i> مستعدة؟ اختاري وابدأي <i class="fas fa-heart"></i>';
+            encouragementMsg.innerHTML = '<i class="fas fa-music"></i> هتشتغل الموسيقى اللي بتحبيها طول ما المؤقت شغال 🎵';
+        }
+        
+        // أحداث اختيار المادة
+        subjectBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                subjectBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedSubject = btn.getAttribute('data-subject');
+                updatePlan();
+                resetAll();
+            });
+        });
+        
+        // أحداث اختيار الوقت
+        timeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                timeBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedMinutes = parseInt(btn.getAttribute('data-minutes'));
+                updatePlan();
+                resetAll();
+            });
+        });
+        
+        // أزرار التحكم
+        startBtn.addEventListener('click', startTimer);
+        stopBtn.addEventListener('click', stopTimer);
+        resetBtn.addEventListener('click', resetAll);
+        
+        // التابات
+        const tabHome = document.getElementById('tabHome');
+        const tabDay = document.getElementById('tabDay');
+        const tabStudy = document.getElementById('tabStudy');
+        const tabFun = document.getElementById('tabFun');
+        
+        function setActiveTab(activeTab) {
+            [tabHome, tabDay, tabStudy, tabFun].forEach(tab => tab.classList.remove('active'));
+            activeTab.classList.add('active');
+        }
+        
+        tabHome.addEventListener('click', () => { setActiveTab(tabHome); window.location.href = 'index.html'; });
+        tabDay.addEventListener('click', () => { setActiveTab(tabDay); window.location.href = 'day.html'; });
+        tabStudy.addEventListener('click', () => { setActiveTab(tabStudy); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        tabFun.addEventListener('click', () => { setActiveTab(tabFun); window.location.href = 'fun.html'; });
+        
+        // زر العودة للأعلى
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 300);
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        // تنظيف عند مغادرة الصفحة
+        window.addEventListener('beforeunload', () => {
+            if (timerInterval) clearInterval(timerInterval);
+            stopMusic();
+        });
+    </script>
+</body>
+</html>
